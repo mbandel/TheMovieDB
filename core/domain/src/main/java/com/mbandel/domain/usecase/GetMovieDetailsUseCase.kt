@@ -2,7 +2,6 @@ package com.mbandel.domain.usecase
 
 import com.mbandel.domain.MovieDetailsStatus
 import com.mbandel.domain.MovieDetailsViewDataStatus
-import com.mbandel.domain.MovieListViewDataStatus
 import com.mbandel.domain.model.toViewData
 import com.mbandel.domain.repository.MovieDetailsRepository
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +16,7 @@ class GetMovieDetailsUseCase @Inject constructor(
             when(status) {
                 MovieDetailsStatus.Loading -> MovieDetailsViewDataStatus.Loading
                 is MovieDetailsStatus.Success -> MovieDetailsViewDataStatus.Success(status.movieDetails.toViewData())
-                MovieDetailsStatus.ServerError -> MovieListViewDataStatus.ServerError
+                MovieDetailsStatus.ServerError -> MovieDetailsViewDataStatus.ServerError
                 MovieDetailsStatus.ConnectionError -> MovieDetailsViewDataStatus.ConnectionError
             }
         }

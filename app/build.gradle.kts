@@ -46,7 +46,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":feature:nowplaying"))
 
+    implementation(libs.voyager.hilt)
+    implementation(libs.voyager.navigator)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.core.ktx)

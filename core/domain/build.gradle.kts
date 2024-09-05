@@ -44,6 +44,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.retrofit.core)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     testImplementation(libs.junit4)

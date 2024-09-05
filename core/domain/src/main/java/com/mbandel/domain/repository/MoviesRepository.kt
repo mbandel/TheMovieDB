@@ -14,8 +14,8 @@ class MoviesRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     fun getNowPlayingMovies(): Flow<MovieListStatus> = flow {
-        emit(MovieListStatus.Loading)
         try {
+            emit(MovieListStatus.Loading)
             val request = apiService.getNowPlaying()
             if (request.isSuccessful) {
                 val recentMovies = request.body()
@@ -36,8 +36,9 @@ class MoviesRepository @Inject constructor(
     }
 
     fun getSearchedMovies(query: String): Flow<MovieListStatus> = flow {
-        emit(MovieListStatus.Loading)
+
         try {
+            emit(MovieListStatus.Loading)
             val request = apiService.searchMovie(query)
             if (request.isSuccessful) {
                 val searchedMovies = request.body()

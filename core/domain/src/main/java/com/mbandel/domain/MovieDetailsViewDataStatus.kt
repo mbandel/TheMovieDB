@@ -1,6 +1,5 @@
 package com.mbandel.domain
 
-import com.mbandel.domain.model.MovieDetails
 import com.mbandel.domain.model.MovieDetailsViewData
 
 sealed interface MovieDetailsViewDataStatus {

@@ -25,21 +25,21 @@ class NowPlayingViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state: MutableStateFlow<NowPlayingState> = MutableStateFlow(NowPlayingState())
-    val state: StateFlow<NowPlayingState> = _state
+    internal val state: StateFlow<NowPlayingState> = _state
 
     init {
         getNowPlayingMovies()
     }
 
-    fun addFavouriteMovieId(id: Int) {
+    internal fun addFavouriteMovieId(id: Int) {
         viewModelScope.launch { addFavoriteMovieIdUseCase(id) }
     }
 
-    fun removeFavoriteMovieId(id: Int) {
+    internal fun removeFavoriteMovieId(id: Int) {
         viewModelScope.launch { removeFavoriteMovieIdUseCase(id) }
     }
 
-    fun updateSearchQuery(query: String) {
+    internal fun updateSearchQuery(query: String) {
         _state.update { it.copy(searchQuery = query) }
         searchForMovies()
     }
@@ -62,11 +62,13 @@ class NowPlayingViewModel @Inject constructor(
                         }
 
                         MovieListViewDataStatus.ConnectionError -> {
-                            _state.update { it.copy(isConnectionError = true) }
+                            _state.update { it.copy(isConnectionError = true, isLoading = false) }
                         }
+
                         MovieListViewDataStatus.ServerError -> {
-                            _state.update { it.copy(isServerError = true) }
+                            _state.update { it.copy(isServerError = true, isLoading = false) }
                         }
+
                         MovieListViewDataStatus.Loading -> {
                             _state.update { it.copy(isLoading = true) }
                         }
@@ -83,19 +85,27 @@ class NowPlayingViewModel @Inject constructor(
             getNowPlayingMoviesUseCase().collect { status ->
                 when (status) {
                     is MovieListViewDataStatus.Success -> {
-                        _state.update { it.copy(movieInfoList = status.movieInfo) }
+                        _state.update {
+                            it.copy(
+                                movieInfoList = status.movieInfo,
+                                isConnectionError = false,
+                                isServerError = false,
+                                isLoading = false
+                            )
+                        }
                         checkIfFavorite()
                     }
 
                     MovieListViewDataStatus.ConnectionError -> {
-                        _state.update { it.copy(isConnectionError = true) }
+                        _state.update { it.copy(isConnectionError = true, isLoading = false) }
                     }
 
                     MovieListViewDataStatus.Loading -> {
                         _state.update { it.copy(isLoading = true) }
                     }
+
                     MovieListViewDataStatus.ServerError -> {
-                        _state.update { it.copy(isServerError = true) }
+                        _state.update { it.copy(isServerError = true, isLoading = false) }
                     }
                 }
             }

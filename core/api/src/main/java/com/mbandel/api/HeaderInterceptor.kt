@@ -11,7 +11,7 @@ import okhttp3.Response
 import javax.inject.Singleton
 
 @Singleton
-class HeaderInterceptor : Interceptor {
+internal class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response = runBlocking {
         try {
             chain.run {

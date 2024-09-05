@@ -1,9 +1,7 @@
 package com.mbandel.domain.repository
 
 import com.mbandel.api.ApiService
-import com.mbandel.api.data.MovieDetailsRemote
 import com.mbandel.domain.MovieDetailsStatus
-import com.mbandel.domain.model.MovieDetails
 import com.mbandel.domain.model.toDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

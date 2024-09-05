@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="connection_error">There was an error while receiving data</string>
+    <string name="server_error">Unable to establish a connection. Please check your internet connection</string>
+    <string name="release_date">Release date:</string>
+    <string name="average_vote">Average vote:</string>
+</resources>
