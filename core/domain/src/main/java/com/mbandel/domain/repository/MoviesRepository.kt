@@ -2,7 +2,7 @@ package com.mbandel.domain.repository
 
 
 import com.mbandel.api.ApiService
-import com.mbandel.domain.MovieInfoStatus
+import com.mbandel.domain.MovieListStatus
 import com.mbandel.domain.model.MovieInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -13,15 +13,15 @@ import javax.inject.Singleton
 class MoviesRepository @Inject constructor(
     private val apiService: ApiService
 ) {
-    fun getNowPlayingMovies(): Flow<MovieInfoStatus> = flow {
-        emit(MovieInfoStatus.Loading)
+    fun getNowPlayingMovies(): Flow<MovieListStatus> = flow {
+        emit(MovieListStatus.Loading)
         try {
             val request = apiService.getNowPlaying()
             if (request.isSuccessful) {
                 val recentMovies = request.body()
                 if (recentMovies != null)
                     emit(
-                        MovieInfoStatus.Success(
+                        MovieListStatus.Success(
                             recentMovies.results.map { result ->
                                 MovieInfo(
                                     id = result.id,
@@ -29,21 +29,21 @@ class MoviesRepository @Inject constructor(
                                 )
                             })
                     )
-            } else emit(MovieInfoStatus.ServerError)
+            } else emit(MovieListStatus.ServerError)
         } catch (e: Exception) {
-            emit(MovieInfoStatus.ConnectionError)
+            emit(MovieListStatus.ConnectionError)
         }
     }
 
-    fun getSearchedMovies(query: String): Flow<MovieInfoStatus> = flow {
-        emit(MovieInfoStatus.Loading)
+    fun getSearchedMovies(query: String): Flow<MovieListStatus> = flow {
+        emit(MovieListStatus.Loading)
         try {
             val request = apiService.searchMovie(query)
             if (request.isSuccessful) {
                 val searchedMovies = request.body()
                 if (searchedMovies != null)
                     emit(
-                        MovieInfoStatus.Success(
+                        MovieListStatus.Success(
                             searchedMovies.results.map { result ->
                                 MovieInfo(
                                     id = result.id,
@@ -51,9 +51,9 @@ class MoviesRepository @Inject constructor(
                                 )
                             })
                     )
-            } else emit(MovieInfoStatus.ServerError)
+            } else emit(MovieListStatus.ServerError)
         } catch (e: Exception) {
-            emit(MovieInfoStatus.ConnectionError)
+            emit(MovieListStatus.ConnectionError)
         }
     }
 }

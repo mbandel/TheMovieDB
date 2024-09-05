@@ -1,8 +1,7 @@
 package com.mbandel.domain.usecase
 
-import com.mbandel.domain.MovieInfoStatus
-import com.mbandel.domain.MovieInfoViewDataStatus
-import com.mbandel.domain.model.MovieInfoViewData
+import com.mbandel.domain.MovieListStatus
+import com.mbandel.domain.MovieListViewDataStatus
 import com.mbandel.domain.model.toViewData
 import com.mbandel.domain.repository.MoviesRepository
 import kotlinx.coroutines.flow.Flow
@@ -11,16 +10,16 @@ import javax.inject.Inject
 
 class GetNowPlayingMoviesUseCase @Inject constructor(
     private val moviesRepository: MoviesRepository
-) : () -> Flow<MovieInfoViewDataStatus> {
-    override fun invoke(): Flow<MovieInfoViewDataStatus> {
+) : () -> Flow<MovieListViewDataStatus> {
+    override fun invoke(): Flow<MovieListViewDataStatus> {
         return moviesRepository.getNowPlayingMovies().map { status ->
             when (status) {
-                MovieInfoStatus.Loading -> MovieInfoViewDataStatus.Loading
-                is MovieInfoStatus.Success -> MovieInfoViewDataStatus.Success(status.movieInfo.map {
+                MovieListStatus.Loading -> MovieListViewDataStatus.Loading
+                is MovieListStatus.Success -> MovieListViewDataStatus.Success(status.movieInfo.map {
                     it.toViewData()
                 })
-                MovieInfoStatus.ServerError -> MovieInfoViewDataStatus.ServerError
-                MovieInfoStatus.ConnectionError -> MovieInfoViewDataStatus.ConnectionError
+                MovieListStatus.ServerError -> MovieListViewDataStatus.ServerError
+                MovieListStatus.ConnectionError -> MovieListViewDataStatus.ConnectionError
             }
         }
     }

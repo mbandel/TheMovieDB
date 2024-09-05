@@ -15,6 +15,7 @@ class MovieDetailsRepository @Inject constructor(
     private val apiService: ApiService
 ) {
     fun getMovieDetails(movieId: Int): Flow<MovieDetailsStatus> = flow {
+        emit(MovieDetailsStatus.Loading)
         try {
             val request = apiService.getMovieDetails(movieId)
             if (request.isSuccessful) {

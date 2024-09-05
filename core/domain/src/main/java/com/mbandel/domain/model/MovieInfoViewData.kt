@@ -5,3 +5,7 @@ data class MovieInfoViewData(
     val name: String = "",
     val isFavorite: Boolean = false
 )
+
+fun MovieInfo.toViewData(): MovieInfoViewData {
+    return MovieInfoViewData(id = this.id, name = this.name)
+}
