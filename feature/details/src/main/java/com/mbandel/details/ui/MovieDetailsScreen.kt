@@ -30,6 +30,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
+import com.mbandel.details.MovieDetailsConst
 import com.mbandel.details.MovieDetailsViewModel
 import com.mbandel.details.R
 
@@ -106,7 +107,7 @@ private fun MovieDetailsComposableScreen(movieId: Int, viewModel: MovieDetailsVi
 
 @Composable
 fun PosterImage(backdropPath: String) {
-    val imageUrl = "$BACKDROP_URL$backdropPath"
+    val imageUrl = "${MovieDetailsConst.BACKDROP_PATH}$backdropPath"
     val request = ImageRequest.Builder(LocalContext.current)
         .data(imageUrl)
         .build()
@@ -119,5 +120,3 @@ fun PosterImage(backdropPath: String) {
         modifier = Modifier.size(width = 400.dp, height = 200.dp)
     )
 }
-
-const val BACKDROP_URL = "https://image.tmdb.org/t/p/w500"

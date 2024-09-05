@@ -1,24 +1,23 @@
-import java.util.Properties
-
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+secrets {
+    defaultPropertiesFileName = "apikeys.properties"
 }
 
 android {
+    buildFeatures {
+        buildConfig = true
+    }
     namespace = "com.mbandel.api"
     compileSdk = 34
 
     defaultConfig {
-        val keystoreFile = project.rootProject.file("apikeys.properties")
-        val properties = Properties()
-        properties.load(keystoreFile.inputStream())
-
-        val baseUrl = properties.getProperty("BASE_URL") ?: ""
-        val bearerToken = properties.getProperty("BEARER_TOKEN") ?: ""
-
         minSdk = 26
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"

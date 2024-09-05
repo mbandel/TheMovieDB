@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("com.google.dagger.hilt.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -30,10 +32,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    kapt {
+        correctErrorTypes = true
+    }
 }
 
 dependencies {
-
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

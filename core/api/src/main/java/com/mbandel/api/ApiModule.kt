@@ -19,7 +19,7 @@ internal object ApiModule {
         val retrofit = Retrofit
             .Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(ApiConst.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(
                 OkHttpClient.Builder()
                     .addInterceptor(HeaderInterceptor())

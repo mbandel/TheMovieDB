@@ -4,9 +4,17 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-kapt")
     alias(libs.plugins.compose.compiler)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+secrets {
+    defaultPropertiesFileName = "apikeys.properties"
 }
 
 android {
+    buildFeatures {
+        buildConfig = true
+    }
     namespace = "com.mbandel.details"
     compileSdk = 34
 
